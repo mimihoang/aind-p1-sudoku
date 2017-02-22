@@ -3,11 +3,16 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: In sudoku, a naked pair is a set of exactly two candidates that are in exactly two squares in a row, column, or block. To solve this using constraint propagation, first I identify peer boxes that have only 2 elements. Among these boxes, I locate the boxes that have the same elements (naked twins). After that I eliminate the corresponding digits from all the boxes that are peers to the naked twins.
+A: According to [Wikipedia](https://en.wikipedia.org/wiki/Constraint_satisfaction), constraint propagation works by reducing domains of variables, strengthening constraints, or creating new ones. This leads to a reduction of the search space, making the problem easier to solve. The strategy is to apply the same constraint as many times as possible until a solution is obtained or it reaches the end and no solution is found.
+
+In sudoku, a naked pair is a set of exactly two candidates that are in exactly two squares in a row, column, or block. Using constraint propagation, we try to eliminate or reduce the number of possible values for a square. For the implementation steps, first we identify peer boxes that have only 2 elements. Among these boxes, we look for the boxes that have the same elements (naked twins). Then we can eliminate the corresponding digits from all the boxes that are peers to the naked twins.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: I add the diagonal constraint as an additional unit in sudoku so that it will search the corresponding diagonal entries as peers. For search and reduce puzzle step, it calls eliminate(), only_choice() and naked_twins() functions.
+A: To solve the diagonal sudoku problem, we don't really have to change the constraint propagation code because it doesn't take into account where each unit is located. It just needs to know what units it needs to apply the transformation. All we need to do is to add two diagonal additional units to the unitlist so the search can locate the corresponding diagonal entries as peers. See the code snippet below where the diagonal units are being added for the diagonal constraint. 
+
+![](images/diagonal_units.png)
+
 
 ### Install
 This project requires **Python 3**.
